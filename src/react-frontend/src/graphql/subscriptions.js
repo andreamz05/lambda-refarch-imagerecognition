@@ -232,8 +232,6 @@ export const onDeletePhoto = /* GraphQL */ `
           Direction
         }
       }
-      createdAt
-      updatedAt
       album {
         id
         name
