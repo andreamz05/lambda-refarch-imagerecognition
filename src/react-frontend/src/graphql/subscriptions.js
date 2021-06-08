@@ -179,8 +179,6 @@ export const onUpdatePhoto = /* GraphQL */ `
           Direction
         }
       }
-      createdAt
-      updatedAt
       album {
         id
         name
@@ -232,6 +230,8 @@ export const onDeletePhoto = /* GraphQL */ `
           Direction
         }
       }
+      createdAt
+      updatedAt
       album {
         id
         name
