@@ -39,17 +39,18 @@ export const AlbumDetails = (props) => {
 				{ owner: user.username })).subscribe({
 					next: (data) => {
 						const photo = data.value.data.onCreatePhoto
-						if (photo.albumId !== props.id) return
-						setPhotos(p => p.concat([photo]))
-
-						setProcessingStatuses((prevState => {
-							prevState[photo.id] = {
-								'status': photo.ProcessingStatus,
-								'sfnArn': photo.SfnExecutionArn
-							}
-							return prevState
-						}))
-
+						if(photo){
+							if (photo.albumId !== props.id) return
+							setPhotos(p => p.concat([photo]))
+	
+							setProcessingStatuses((prevState => {
+								prevState[photo.id] = {
+									'status': photo.ProcessingStatus,
+									'sfnArn': photo.SfnExecutionArn
+								}
+								return prevState
+							}))
+						}
 					}
 				})
 		}
@@ -67,23 +68,26 @@ export const AlbumDetails = (props) => {
 				{ owner: user.username })).subscribe({
 					next: (data) => {
 						const photo = data.value.data.onUpdatePhoto
-						if (photo.albumId !== props.id) return
-						setPhotos(p => {
-							let newPhotos = p.slice()
-							for (let i in newPhotos) {
-								if (newPhotos[i].id === photo.id) {
-									newPhotos[i] = photo
+						if(photo){
+							if (photo.albumId !== props.id) return
+							setPhotos(p => {
+								let newPhotos = p.slice()
+								for (let i in newPhotos) {
+									if (newPhotos[i].id === photo.id) {
+										newPhotos[i] = photo
+									}
 								}
-							}
-							setProcessingStatuses((prevState => {
-								prevState[photo.id] = {
-									'status': photo.ProcessingStatus,
-									'sfnArn': photo.SfnExecutionArn
-								}
-								return prevState
-							}))
-							return newPhotos
-						})
+								setProcessingStatuses((prevState => {
+									prevState[photo.id] = {
+										'status': photo.ProcessingStatus,
+										'sfnArn': photo.SfnExecutionArn
+									}
+									return prevState
+								}))
+								return newPhotos
+							})
+						}
+
 					}
 				})
 		}

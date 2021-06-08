@@ -10,16 +10,20 @@ import {Auth} from "aws-amplify";
 import Storage from '@aws-amplify/storage'
 import API, {graphqlOperation} from "@aws-amplify/api";
 
+
 export const S3ImageUpload = (props) => {
+
   const [uploading, setUploading] = useState(false)
   const [statuses, setStatuses] = useState({})
 
   const ProcessingStatus = (props) => {
     setStatuses(prevState => {
-      for (let id in props.processingStatuses) {
-        if (id in prevState) {
-          prevState[id]['status'] = props.processingStatuses[id]['status']
-          prevState[id]['sfnArn'] = props.processingStatuses[id]['sfnArn']
+      if(props){
+        for (let id in props.processingStatuses) {
+          if (id in prevState) {
+            prevState[id]['status'] = props.processingStatuses[id]['status']
+            prevState[id]['sfnArn'] = props.processingStatuses[id]['sfnArn']
+          }
         }
       }
       return prevState
@@ -40,6 +44,7 @@ export const S3ImageUpload = (props) => {
     })
     return (Object.keys(statuses).map((fileId) => {
         let status = statuses[fileId]
+        console.log(status)
         return (<Message positive>
             {/*<Message.Header>{filename}</Message.Header>*/}
             <p>
@@ -81,7 +86,7 @@ export const S3ImageUpload = (props) => {
     })
 
     try {
-      const result = await Storage.vault.put(
+      const result = await Storage.put(
         fileName,
         file,
         {
@@ -176,7 +181,7 @@ export const PhotoList = React.memo(props => {
               <S3Image
                 key={photo.id}
                 imgKey={'resized/' + photo.thumbnail.key.replace(/.+resized\//, '')}
-                level="private"
+                level="public"
                 // style={{display: 'inline-block', 'paddingRight': '5px'}}
               />
             </Card.Content>

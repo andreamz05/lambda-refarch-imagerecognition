@@ -20,7 +20,35 @@ import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
 import { AlbumList, NewAlbum } from './components/Album'
 import { AlbumDetails } from "./components/AlbumDetail";
 
-Amplify.configure(aws_exports);
+//import {Amplify as Amplify} from '@aws-amplify/core';
+//import { Auth as Auth } from '@aws-amplify/auth';
+
+import awsmobile from './aws-exports';
+
+//Amplify.configure(aws_exports);
+
+var conf = {
+	Auth: {
+
+        // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
+        identityPoolId: aws_exports.aws_cognito_identity_pool_id,
+
+        // REQUIRED - Amazon Cognito Region
+        region: aws_exports.aws_cognito_region,
+
+        // OPTIONAL - Amazon Cognito User Pool ID
+        userPoolId: aws_exports.aws_user_pools_id,
+
+        // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+        userPoolWebClientId: aws_exports.aws_user_pools_web_client_id,
+
+    }
+}
+console.log(conf)
+
+Amplify.configure(aws_exports)
+Auth.configure(aws_exports);
+
 
 function App() {
 	return (

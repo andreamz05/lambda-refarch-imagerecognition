@@ -11,6 +11,7 @@ import * as subscriptions from '../graphql/subscriptions'
 
 import { makeComparator } from "../utils";
 
+
 export const NewAlbum = () => {
 	const [name, setName] = useState('')
 	const handleSubmit = async (event) => {
